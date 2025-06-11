@@ -18,7 +18,6 @@ import kotlinx.serialization.InternalSerializationApi
 @OptIn(InternalSerializationApi::class)
 @Composable
 fun NoteUi(note : NoteModel, deleteNote : ()-> Unit){
-    //text, date, croix delete
     Box(modifier = Modifier.fillMaxWidth()) {
         Row (modifier = Modifier.fillMaxWidth()){
             Text(text = note.content)

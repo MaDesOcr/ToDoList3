@@ -3,7 +3,11 @@ package com.dev.todolist3.ui
 import android.provider.ContactsContract
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -16,10 +20,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.dev.todolist3.data.NoteApi
 import com.dev.todolist3.data.NoteModel
 import kotlinx.coroutines.launch
 import kotlinx.serialization.InternalSerializationApi
+import java.nio.file.WatchEvent
 
 @OptIn(ExperimentalMaterial3Api::class, InternalSerializationApi::class)
 @Composable
@@ -29,8 +35,8 @@ fun ListeNotesScreen(clickAddNotes: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize().padding(20.dp),
+        contentAlignment = Alignment.TopCenter
     ) {
 
         LaunchedEffect(Unit) {
@@ -41,8 +47,13 @@ fun ListeNotesScreen(clickAddNotes: () -> Unit) {
             } as List<NoteModel>
         }
 
-        Column {
+        Column(modifier = Modifier.align(Alignment.Center).fillMaxWidth().padding(
+            20.dp
+        )){
             Text(text = "Liste Notes")
+
+            Spacer(modifier = Modifier.height(20.dp))
+
             listeNotes.forEach { note -> NoteUi(
                 note,
                 deleteNote = { ->
