@@ -1,6 +1,5 @@
 package com.dev.todolist3.ui
 
-import android.icu.text.DateFormat
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +17,6 @@ import androidx.compose.ui.Modifier
 import com.dev.todolist3.data.NoteApi
 import com.dev.todolist3.data.NoteDto
 import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
 
 
 @Composable
@@ -45,6 +43,7 @@ fun AddNoteScreen(clickSaveNewNotes: () -> Unit,
                 coroutineScope.launch {
                     NoteApi.addNoteDto(NoteDto(content = givenContent, date = "2025-01-01"))
                 }
+                clickSaveNewNotes()
             }) {
                 Text("Save new note")
             }

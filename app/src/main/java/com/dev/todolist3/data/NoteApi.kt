@@ -35,8 +35,8 @@ object NoteApi {
     suspend fun deleteNote(id : Int) = withContext(Dispatchers.IO) {
         val url = URL("http://10.0.2.2:8081/api/notes/$id")
         val connection = url.openConnection() as HttpURLConnection
-     /*   connection.requestMethod = "DELETE"
-        connection.connectTimeout = 5000
+        connection.requestMethod = "DELETE"
+       /* connection.connectTimeout = 5000
         connection.readTimeout = 5000*/
         try {
             val responseCode = connection.responseCode

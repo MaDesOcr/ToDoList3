@@ -41,6 +41,7 @@ fun NavGraph(
             AddNoteScreen(clickSaveNewNotes = {
                 //saveNote
                 navController.navigate(Destinations.ListeNotes)
+
             },
                 clickAnnuler = {
                     navController.navigate(Destinations.ListeNotes)
