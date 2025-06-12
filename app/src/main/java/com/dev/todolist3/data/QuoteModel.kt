@@ -4,9 +4,8 @@ import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
 @InternalSerializationApi @Serializable
-data class NoteModel(
+data class QuoteModel(
     val id: Int,
-    val date: String,
-    val content: String
+    val content: String,
+    val compteur: Int
 )
-
