@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dev.todolist3.data.NoteApi
 import com.dev.todolist3.data.NoteModel
@@ -47,33 +52,54 @@ fun ListeNotesScreen(clickAddNotes: () -> Unit) {
             } as List<NoteModel>
         }
 
-        Column(modifier = Modifier.align(Alignment.Center).fillMaxWidth().padding(
-            20.dp
-        )){
-            Text(text = "Liste Notes")
+        Column(modifier = Modifier.align(Alignment.Center).fillMaxSize().padding(
+            20.dp), horizontalAlignment = Alignment.CenterHorizontally)
+        {
+            Text(text = "Liste Notes", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineMedium, textDecoration = TextDecoration.Underline)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            listeNotes.forEach { note -> NoteUi(
-                note,
-                deleteNote = { ->
-                    coroutineScope.launch {
-                        try {
-                            listeNotes = listeNotes.filter {
-                                it.id != note.id
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                Column {
+                listeNotes.forEach { note ->
+                    NoteUi(
+                        note,
+                        deleteNote = { ->
+                            coroutineScope.launch {
+                                try {
+                                    listeNotes = listeNotes.filter {
+                                        it.id != note.id
+                                    }
+                                    NoteApi.deleteNote(note.id)
+                                } catch (e: Exception) {
+                                    println("Erreur lors de la suppression de la note: ${e.message}")
+                                }
                             }
-                            NoteApi.deleteNote(note.id)
-                        } catch (e: Exception) {
-                            println("Erreur lors de la suppression de la note: ${e.message}")
-                         }
+                        }
+
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                }
+
+                    Button(onClick = clickAddNotes) {
+                        Text("Créer une note")
                     }
                 }
-                )
+
+
             }
 
-            Button(onClick = clickAddNotes) {
-                Text("Créer une note")
-            }
         }
+    }
+}
+
+
+@OptIn(InternalSerializationApi::class)
+@Preview(showBackground = true)
+@Composable
+fun ListeNotesScreenPreview(){
+    ListeNotesScreen() {
+
     }
 }
